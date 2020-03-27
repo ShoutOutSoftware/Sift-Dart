@@ -1,4 +1,4 @@
-import 'package:Sift/Sift.dart';
+import 'package:sift/Sift.dart';
 import 'package:test/test.dart';
 
 void main() {
