@@ -1,22 +1,11 @@
-A library for Dart developers.
+# Sift
+A lightweight map reading library that can be used in Dart and Flutter projects
+<br/>
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
-
-## Usage
-
-A simple usage example:
-
-```dart
-import 'package:Sift/Sift.dart';
-
-main() {
-  var awesome = new Awesome();
-}
+## To use this package
+```yaml
+dependencies:
+    flutter:
+      sdk: flutter
+    sift:
 ```
-
-## Features and bugs
-
-Please file feature requests and bugs at the [issue tracker][tracker].
-
-[tracker]: http://example.com/issues/replaceme
