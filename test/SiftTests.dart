@@ -2,7 +2,7 @@ import 'package:sift/Sift.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Tests to read data from a map', () {
+  group('tests to read data from a map', () {
     final sift = Sift();
     var stringData = <String, dynamic>{};
 
@@ -17,7 +17,7 @@ void main() {
         sift.readStringFromMap(null, 'someKey');
         fail('did not throw error');
       } on SiftException catch (e) {
-        expect(e.errorMessage, 'the map is null');
+        expect(e.errorMessage, 'The source map is null');
       }
     });
 
@@ -26,7 +26,7 @@ void main() {
         sift.readStringFromMap(stringData, null);
         fail('did not throw error');
       } on SiftException catch (e) {
-        expect(e.errorMessage, 'the key is null');
+        expect(e.errorMessage, 'The key is null');
       }
     });
 
@@ -35,7 +35,7 @@ void main() {
         sift.readStringFromMap(stringData, 'non-existent-key');
         fail('did not throw error');
       } on SiftException catch (e) {
-        expect(e.errorMessage, 'key not found');
+        expect(e.errorMessage, 'Key: non-existent-key not found');
       }
     });
 
@@ -46,9 +46,9 @@ void main() {
       } on SiftException catch (e) {
         expect(
             e.errorMessage,
-            'the value type is not the same as the requested one.\n'
-            'Requested: String\n'
-            'Found: int');
+            'The value type is not the same as the requested one.\n'
+            'Key: wrongType\n'
+            'Requested: String Found: int');
       }
     });
 
@@ -57,7 +57,7 @@ void main() {
         sift.readStringFromMap(stringData, 'nullValue');
         fail('did not throw error');
       } on SiftException catch (e) {
-        expect(e.errorMessage, 'the value is null');
+        expect(e.errorMessage, 'The value is null for Key: nullValue');
       }
     });
 
@@ -65,15 +65,15 @@ void main() {
       expect(sift.readStringFromMap(stringData, 'correctValue'), 'some string');
     });
 
-    test('retruns default value when key is not found', () {
+    test('returns default value when key is not found', () {
       expect(sift.readStringFromMapWithDefaultValue(stringData, 'non-existent-key', 'def val'), 'def val');
     });
 
-    test('retruns default value when value is of wrong type', () {
+    test('returns default value when value is of wrong type', () {
       expect(sift.readStringFromMapWithDefaultValue(stringData, 'wrongType', 'def val'), 'def val');
     });
 
-    test('retruns default value when value is null', () {
+    test('returns default value when value is null', () {
       expect(sift.readStringFromMapWithDefaultValue(stringData, 'nullValue', 'def val'), 'def val');
     });
 
@@ -124,6 +124,46 @@ void main() {
     });
   });
 
+  group('tests to read date from a map', () {
+    final sift = Sift();
+
+    test('throws exception if date string is not correct', () {
+      try {
+        var data = {'date': 'wrong date string'};
+        sift.readDateFromMap(data, 'date', 'yyyy MM dd');
+        fail('did not throw error');
+      } on SiftException catch (e) {
+        expect(e.errorMessage, 'Failed to parse date for Key: date, Date: wrong date string, Format: yyyy MM dd');
+      }
+    });
+
+    test('throws exception when date format is not correct', () {
+      try {
+        var data = {'date': '1990 03 25'};
+        sift.readDateFromMap(data, 'date', 'dd xyz');
+        fail('did not throw error');
+      } on SiftException catch (e) {
+        expect(e.errorMessage, 'Failed to parse date for Key: date, Date: 1990 03 25, Format: dd xyz');
+      }
+    });
+
+    test('successfully reading dates', () {
+      var data = {'date': '1990 03 25'};
+
+      try {
+        sift.readDateFromMap(data, 'date', 'yyyy MM dd');
+      }on SiftException catch (e) {
+        printOnFailure(e.errorMessage);
+      }
+
+      data = {'date': '25/03/1990'};
+      sift.readDateFromMap(data, 'date', 'dd/MM/yyyy');
+
+      data = {'date': '25 03 90 12:35'};
+      sift.readDateFromMap(data, 'date', 'dd MM yyyy hh:mm');
+    });
+  });
+
   group('Tests to read data from a list', () {
     final sift = Sift();
 
@@ -132,7 +172,7 @@ void main() {
         sift.readStringFromList(null, 0);
         fail('did not throw error');
       } on SiftException catch (e) {
-        expect(e.errorMessage, 'the list is null');
+        expect(e.errorMessage, 'The source list is null');
       }
     });
 
@@ -141,7 +181,7 @@ void main() {
         sift.readStringFromList([], null);
         fail('did not throw error');
       } on SiftException catch (e) {
-        expect(e.errorMessage, 'the index is null');
+        expect(e.errorMessage, 'The index is null');
       }
     });
 
@@ -150,7 +190,7 @@ void main() {
         sift.readStringFromList(['a', 'b'], 100);
         fail('did not throw error');
       } on SiftException catch (e) {
-        expect(e.errorMessage, 'index 100 out of bounds');
+        expect(e.errorMessage, 'Index 100 out of bounds');
       }
     });
 
@@ -161,9 +201,9 @@ void main() {
       } on SiftException catch (e) {
         expect(
             e.errorMessage,
-            'the value type is not the same as the requested one.\n'
-            'Requested: String\n'
-            'Found: int');
+            'The value type is not the same as the requested one.\n'
+            'Index: 0\n'
+            'Requested: String Found: int');
       }
     });
 
@@ -172,7 +212,7 @@ void main() {
         sift.readStringFromList(['a', 'b', null], 2);
         fail('did not throw error');
       } on SiftException catch (e) {
-        expect(e.errorMessage, 'the value is null');
+        expect(e.errorMessage, 'The value is null for Index: 2');
       }
     });
 
@@ -180,15 +220,15 @@ void main() {
       expect(sift.readStringFromList(['a', 'b', 'c'], 1), 'b');
     });
 
-    test('retruns default value when key is not found', () {
+    test('returns default value when key is not found', () {
       expect(sift.readStringFromListWithDefaultValue(['a', 'b'], 5, 'def val'), 'def val');
     });
 
-    test('retruns default value when value is of wrong type', () {
+    test('returns default value when value is of wrong type', () {
       expect(sift.readStringFromListWithDefaultValue([1, 2], 0, 'def val'), 'def val');
     });
 
-    test('retruns default value when value is null', () {
+    test('returns default value when value is null', () {
       expect(sift.readStringFromListWithDefaultValue(['a', null], 1, 'def val'), 'def val');
     });
 
