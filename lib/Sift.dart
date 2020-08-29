@@ -102,8 +102,7 @@ class Sift {
     try {
       var formatter = DateFormat(dateFormat);
       return formatter.parse(dateString);
-    } on FormatException catch (e) {
-      print(e.message);
+    } on FormatException catch (_) {
       throw SiftException('Failed to parse date for Key: $key, Date: $dateString, Format: $dateFormat');
     }
   }
