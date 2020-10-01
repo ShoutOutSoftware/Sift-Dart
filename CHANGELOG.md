@@ -9,3 +9,7 @@
 ## 1.0.2
 
 - Added feature to read date from map
+
+## 1.0.3
+
+- Fixed issue with reading lists of dynamic type
