@@ -11,7 +11,7 @@ export 'Sift.dart';
 export 'SiftException.dart';
 
 class Sift {
-  //MARK: Functions to read from dictionary
+  //MARK: Helper functions to read values from a map
 
   String readStringFromMap(Map<String, dynamic> map, String key) {
     return _readFromMap(map, key);
@@ -26,7 +26,7 @@ class Sift {
   }
 
   List<String> readStringListFromMap(Map<String, dynamic> map, String key) {
-    return _readFromMap(map, key);
+    return _readListFromMap(map, key);
   }
 
   List<String> readStringListFromMapWithDefaultValue(
@@ -34,7 +34,7 @@ class Sift {
     String key, [
     List<String> defaultValue,
   ]) {
-    return _readFromMapWithDefaultValue(map, key, defaultValue);
+    return _readListFromMapWithDefaultValue(map, key, defaultValue);
   }
 
   num readNumberFromMap(Map<String, dynamic> map, String key) {
@@ -50,7 +50,7 @@ class Sift {
   }
 
   List<num> readNumberListFromMap(Map<String, dynamic> map, String key) {
-    return _readFromMap(map, key);
+    return _readListFromMap(map, key);
   }
 
   List<num> readNumberListFromMapWithDefaultValue(
@@ -58,7 +58,7 @@ class Sift {
     String key, [
     List<num> defaultValue,
   ]) {
-    return _readFromMapWithDefaultValue(map, key, defaultValue);
+    return _readListFromMapWithDefaultValue(map, key, defaultValue);
   }
 
   Map<String, dynamic> readMapFromMap(Map<String, dynamic> map, String key) {
@@ -74,7 +74,7 @@ class Sift {
   }
 
   List<Map<String, dynamic>> readMapListFromMap(Map<String, dynamic> map, String key) {
-    return _readFromMap(map, key);
+    return _readListFromMap(map, key);
   }
 
   List<Map<String, dynamic>> readMapListFromMapWithDefaultValue(
@@ -82,7 +82,7 @@ class Sift {
     String key, [
     List<Map<String, dynamic>> defaultValue,
   ]) {
-    return _readFromMapWithDefaultValue(map, key, defaultValue);
+    return _readListFromMapWithDefaultValue(map, key, defaultValue);
   }
 
   bool readBooleanFromMap(Map<String, dynamic> map, String key) {
@@ -120,6 +120,8 @@ class Sift {
     }
   }
 
+  //MARK: Functions to read values from a map
+
   T _readFromMapWithDefaultValue<T>(Map<String, dynamic> map, String key, T defaultValue) {
     try {
       return _readFromMap(map, key);
@@ -129,22 +131,33 @@ class Sift {
   }
 
   T _readFromMap<T>(Map<String, dynamic> map, String key) {
-    if (map == null) {
-      throw SiftException('The source map is null');
-    }
+    var value = _readValueFromMap(map, key);
+    return _parseValue<T>(value, 'Key: $key');
+  }
 
-    if (key == null) {
-      throw SiftException('The key is null');
-    }
-
-    if (map.containsKey(key)) {
-      return _parseValue<T>(map[key], 'Key: $key');
-    } else {
-      throw SiftException('Key: $key not found');
+  List<T> _readListFromMapWithDefaultValue<T>(Map<String, dynamic> map, String key, List<T> defaultValue) {
+    try {
+      return _readListFromMap(map, key);
+    } catch (e) {
+      return defaultValue;
     }
   }
 
-  //MARK: Functions to read from dictionary
+  List<T> _readListFromMap<T>(Map<String, dynamic> map, String key) {
+    var value = _readValueFromMap(map, key);
+    return _parseListValue(value, 'Key: $key');
+  }
+
+  T _readValueFromMap<T>(Map<String, dynamic> map, String key) {
+    if (map == null) throw SiftException('The source map is null');
+    if (key == null) throw SiftException('The key is null');
+    if (map.containsKey(key) == false) throw SiftException('Key: $key not found');
+    if (map[key] == null) throw SiftException('The value is null for key: $key');
+
+    return map[key];
+  }
+
+  //MARK: Helper functions to read values from a list
 
   String readStringFromList(List<dynamic> list, int index) {
     return _readFromList(list, index);
@@ -182,6 +195,8 @@ class Sift {
     return _readFromListWithDefaultValue(list, index, defaultValue);
   }
 
+  //MARK: Functions to read values from a list
+
   T _readFromListWithDefaultValue<T>(List<dynamic> list, int index, T defaultValue) {
     try {
       return _readFromList(list, index);
@@ -191,34 +206,40 @@ class Sift {
   }
 
   T _readFromList<T>(List<dynamic> list, int index) {
-    if (list == null) {
-      throw SiftException('The source list is null');
-    }
+    var value = _readValueFromList(list, index);
+    return _parseValue<T>(value, 'Index: $index');
+  }
 
-    if (index == null) {
-      throw SiftException('The index is null');
-    }
+  T _readValueFromList<T>(List<dynamic> list, int index) {
+    if (list == null) throw SiftException('The source list is null');
+    if (index == null) throw SiftException('The index is null');
+    if (list.length <= index) throw SiftException('Index ${index} out of bounds');
+    if (list[index] == null) throw SiftException('The value is null for index: $index');
 
-    if (list.length > index) {
-      return _parseValue<T>(list[index], 'Index: $index');
-    } else {
-      throw SiftException('Index ${index} out of bounds');
-    }
+    return list[index];
   }
 
   //MARK: Function to parse a value
 
   T _parseValue<T>(dynamic value, String identifier) {
-    if (value == null) {
-      throw SiftException('The value is null for $identifier');
-    }
-
     if (value is T) {
       return value;
     } else {
       throw SiftException('The value type is not the same as the requested one.'
           '\n$identifier'
           '\nRequested: ${T.toString()} Found: ${value.runtimeType.toString()}');
+    }
+  }
+
+  List<T> _parseListValue<T>(dynamic value, String identifier) {
+    var listValue = _parseValue<List>(value, identifier);
+
+    try {
+      return List<T>.from(listValue);
+    } catch (e) {
+      throw SiftException('The list type is not the same as the requested one.'
+          '\n$identifier'
+          '\nRequested: List<${T.toString()}> Found: ${value.runtimeType.toString()}');
     }
   }
 }

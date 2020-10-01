@@ -52,12 +52,27 @@ void main() {
       }
     });
 
+    test('throws exception when list type is wrong', () {
+      try {
+        var data = <String, dynamic>{};
+        data['stringsArray'] = List<dynamic>.from(['one', 'two', 'three']);
+        sift.readNumberListFromMap(data, 'stringsArray');
+        fail('did not throw error');
+      } on SiftException catch (e) {
+        expect(
+            e.errorMessage,
+            'The list type is not the same as the requested one.\n'
+            'Key: stringsArray\n'
+            'Requested: List<num> Found: List<dynamic>');
+      }
+    });
+
     test('throws exception when value type is null', () {
       try {
         sift.readStringFromMap(stringData, 'nullValue');
         fail('did not throw error');
       } on SiftException catch (e) {
-        expect(e.errorMessage, 'The value is null for Key: nullValue');
+        expect(e.errorMessage, 'The value is null for key: nullValue');
       }
     });
 
@@ -90,6 +105,7 @@ void main() {
       data['double'] = 12.432132213;
       data['boolean'] = true;
       data['intArray'] = [1, 2, 3];
+      data['longNumberArray'] = List<dynamic>.from([1, 2, 3, 123123, 5000000, 12.43435, 23, 0, 12233]);
       data['stringArray'] = ['valOne', 'valTwo', 'valThree'];
       data['innerMap'] = {
         'innerString': 'inner1Val',
@@ -110,6 +126,8 @@ void main() {
       expect(sift.readNumberFromMap(data, 'double'), 12.432132213);
       expect(sift.readBooleanFromMap(data, 'boolean'), true);
       expect(sift.readNumberListFromMap(data, 'intArray'), [1, 2, 3]);
+
+      expect(sift.readNumberListFromMap(data, 'longNumberArray'), [1, 2, 3, 123123, 5000000, 12.43435, 23, 0, 12233]);
       expect(sift.readStringListFromMap(data, 'stringArray'), ['valOne', 'valTwo', 'valThree']);
 
       Map parsedInnerMap1 = sift.readMapFromMap(data, 'innerMap');
@@ -152,7 +170,7 @@ void main() {
 
       try {
         sift.readDateFromMap(data, 'date', 'yyyy MM dd');
-      }on SiftException catch (e) {
+      } on SiftException catch (e) {
         printOnFailure(e.errorMessage);
       }
 
@@ -212,7 +230,7 @@ void main() {
         sift.readStringFromList(['a', 'b', null], 2);
         fail('did not throw error');
       } on SiftException catch (e) {
-        expect(e.errorMessage, 'The value is null for Index: 2');
+        expect(e.errorMessage, 'The value is null for index: 2');
       }
     });
 
