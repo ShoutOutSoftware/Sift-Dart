@@ -1,5 +1,5 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:sift/sift.dart';
-import 'package:test/test.dart';
 
 void main() {
   group('tests to read data from a map', () {
@@ -47,8 +47,8 @@ void main() {
         expect(
             e.errorMessage,
             'The value type is not the same as the requested one.\n'
-                'Key: wrongType\n'
-                'Requested: String Found: int');
+            'Key: wrongType\n'
+            'Requested: String Found: int');
       }
     });
 
@@ -62,8 +62,8 @@ void main() {
         expect(
             e.errorMessage,
             'The list type is not the same as the requested one.\n'
-                'Key: stringsArray\n'
-                'Requested: List<num> Found: List<dynamic>');
+            'Key: stringsArray\n'
+            'Requested: List<num> Found: List<dynamic>');
       }
     });
 
@@ -220,8 +220,8 @@ void main() {
         expect(
             e.errorMessage,
             'The value type is not the same as the requested one.\n'
-                'Index: 0\n'
-                'Requested: String Found: int');
+            'Index: 0\n'
+            'Requested: String Found: int');
       }
     });
 
