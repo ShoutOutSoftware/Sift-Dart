@@ -17,3 +17,7 @@
 ## 1.0.4
 
 - Changed file names as per the dart filename format
+
+## 1.0.5
+
+- Added dependency on flutter
