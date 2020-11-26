@@ -1,6 +1,6 @@
 name: sift
 description: A lightweight map reading library that can be used in Dart and Flutter projects
-version: 1.0.3
+version: 1.0.4
 homepage: https://github.com/ShoutOutSoftware/Sift-Dart
 
 environment:

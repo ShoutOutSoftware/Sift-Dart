@@ -5,10 +5,10 @@ library sift;
 
 import 'package:intl/intl.dart';
 
-import 'SiftException.dart';
+import 'sift_exception.dart';
 
-export 'Sift.dart';
-export 'SiftException.dart';
+export 'sift.dart';
+export 'sift_exception.dart';
 
 class Sift {
   //MARK: Helper functions to read values from a map
