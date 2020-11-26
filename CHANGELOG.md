@@ -21,3 +21,7 @@
 ## 1.0.5
 
 - Added dependency on flutter
+
+## 1.0.6
+
+- Added comments
