@@ -13,3 +13,7 @@
 ## 1.0.3
 
 - Fixed issue with reading lists of dynamic type
+
+## 1.0.4
+
+- Changed file names as per the dart filename format
