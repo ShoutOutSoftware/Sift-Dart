@@ -25,3 +25,7 @@
 ## 1.0.6
 
 - Added comments
+
+## 1.0.7
+
+- Updated example and readme

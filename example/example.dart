@@ -13,8 +13,8 @@ class SiftExample {
     try {
       var age = _sift.readNumberFromMap(_data, 'age');
       var address = _sift.readStringFromMap(_data, 'address');
-      print(age);
-      print(address);
+      print(age); //prints 21
+      print(address); //prints 41 Main Drive
     } on SiftException catch (exception) {
       print(exception.errorMessage);
     }
