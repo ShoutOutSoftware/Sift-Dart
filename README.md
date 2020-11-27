@@ -3,6 +3,8 @@ A lightweight map reading library that can be used in Dart and Flutter projects
 
 ## Usage
 ```
+Map<String, dynamic> _data = {'age': 21, 'name': null, 'address': '41 Main drive'};
+
 //reading values that are required - throws exception in case of error
 try {
   var age = _sift.readNumberFromMap(_data, 'age');

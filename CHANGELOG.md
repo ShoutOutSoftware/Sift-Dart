@@ -33,3 +33,7 @@
 ## 1.0.8
 
 - Updated readme
+
+## 1.0.9
+
+- Updated readme
