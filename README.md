@@ -2,6 +2,7 @@
 A lightweight map reading library that can be used in Dart and Flutter projects
 
 ## Usage
+```
 //reading values that are required - throws exception in case of error
 try {
   var age = _sift.readNumberFromMap(_data, 'age');

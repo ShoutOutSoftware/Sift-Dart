@@ -29,3 +29,7 @@
 ## 1.0.7
 
 - Updated example and readme
+
+## 1.0.8
+
+- Updated readme
