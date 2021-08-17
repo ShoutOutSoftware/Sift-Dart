@@ -21,15 +21,6 @@ void main() {
       }
     });
 
-    test('throws exception when key is null', () {
-      try {
-        sift.readStringFromMap(stringData, null);
-        fail('did not throw error');
-      } on SiftException catch (e) {
-        expect(e.errorMessage, 'The key is null');
-      }
-    });
-
     test('throws exception when key is not found', () {
       try {
         sift.readStringFromMap(stringData, 'non-existent-key');
@@ -130,11 +121,11 @@ void main() {
       expect(sift.readNumberListFromMap(data, 'longNumberArray'), [1, 2, 3, 123123, 5000000, 12.43435, 23, 0, 12233]);
       expect(sift.readStringListFromMap(data, 'stringArray'), ['valOne', 'valTwo', 'valThree']);
 
-      Map parsedInnerMap1 = sift.readMapFromMap(data, 'innerMap');
+      var parsedInnerMap1 = sift.readMapFromMap(data, 'innerMap');
       expect(sift.readStringFromMap(parsedInnerMap1, 'innerString'), 'inner1Val');
       expect(sift.readNumberListFromMap(parsedInnerMap1, 'innerDoubleArray'), [1.2, 32.3, 32.4423]);
 
-      List<Map> parsedMapList = sift.readMapListFromMap(data, 'mapList');
+      var parsedMapList = sift.readMapListFromMap(data, 'mapList');
       expect(parsedMapList.length, 3);
       expect(sift.readStringFromMap(parsedMapList[0], 'arrayMap1String'), 'aMS1');
       expect(sift.readNumberFromMap(parsedMapList[1], 'arrayMap2Int'), 3);
@@ -191,15 +182,6 @@ void main() {
         fail('did not throw error');
       } on SiftException catch (e) {
         expect(e.errorMessage, 'The source list is null');
-      }
-    });
-
-    test('throws exception when index is null', () {
-      try {
-        sift.readStringFromList([], null);
-        fail('did not throw error');
-      } on SiftException catch (e) {
-        expect(e.errorMessage, 'The index is null');
       }
     });
 

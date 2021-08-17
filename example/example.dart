@@ -2,11 +2,7 @@ import 'package:sift/sift.dart';
 
 class SiftExample {
   final _sift = Sift();
-  Map<String, dynamic> _data;
-
-  SiftExample() {
-    _data = {'age': 21, 'name': null, 'address': '41 Main drive'};
-  }
+  Map<String, dynamic> _data = {'age': 21, 'name': null, 'address': '41 Main drive'};
 
   void readRequiredValues() {
     //reading values that are required - throws exception in case of error

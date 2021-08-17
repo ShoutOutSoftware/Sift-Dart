@@ -10,93 +10,93 @@ export 'sift_exception.dart';
 class Sift {
   //MARK: Functions to read string(s) from a map
 
-  String readStringFromMap(Map<String, dynamic> map, String key) {
+  String readStringFromMap(Map<String, dynamic>? map, String key) {
     return _readFromMap(map, key);
   }
 
-  String readStringFromMapWithDefaultValue(
-    Map<String, dynamic> map,
+  String? readStringFromMapWithDefaultValue(
+    Map<String, dynamic>? map,
     String key, [
-    String defaultValue,
+    String? defaultValue,
   ]) {
     return _readFromMapWithDefaultValue(map, key, defaultValue);
   }
 
-  List<String> readStringListFromMap(Map<String, dynamic> map, String key) {
+  List<String> readStringListFromMap(Map<String, dynamic>? map, String key) {
     return _readListFromMap(map, key);
   }
 
-  List<String> readStringListFromMapWithDefaultValue(
-    Map<String, dynamic> map,
+  List<String>? readStringListFromMapWithDefaultValue(
+    Map<String, dynamic>? map,
     String key, [
-    List<String> defaultValue,
+    List<String>? defaultValue,
   ]) {
     return _readListFromMapWithDefaultValue(map, key, defaultValue);
   }
 
   //MARK: Functions to read number(s) from a map
 
-  num readNumberFromMap(Map<String, dynamic> map, String key) {
+  num readNumberFromMap(Map<String, dynamic>? map, String key) {
     return _readFromMap(map, key);
   }
 
-  num readNumberFromMapWithDefaultValue(
-    Map<String, dynamic> map,
+  num? readNumberFromMapWithDefaultValue(
+    Map<String, dynamic>? map,
     String key, [
-    num defaultValue,
+    num? defaultValue,
   ]) {
     return _readFromMapWithDefaultValue(map, key, defaultValue);
   }
 
-  List<num> readNumberListFromMap(Map<String, dynamic> map, String key) {
+  List<num> readNumberListFromMap(Map<String, dynamic>? map, String key) {
     return _readListFromMap(map, key);
   }
 
-  List<num> readNumberListFromMapWithDefaultValue(
-    Map<String, dynamic> map,
+  List<num>? readNumberListFromMapWithDefaultValue(
+    Map<String, dynamic>? map,
     String key, [
-    List<num> defaultValue,
+    List<num>? defaultValue,
   ]) {
     return _readListFromMapWithDefaultValue(map, key, defaultValue);
   }
 
   //MARK: Functions to read map(s) from a map
 
-  Map<String, dynamic> readMapFromMap(Map<String, dynamic> map, String key) {
+  Map<String, dynamic> readMapFromMap(Map<String, dynamic>? map, String key) {
     return _readFromMap(map, key);
   }
 
-  Map<String, dynamic> readMapFromMapWithDefaultValue(
-    Map<String, dynamic> map,
+  Map<String, dynamic>? readMapFromMapWithDefaultValue(
+    Map<String, dynamic>? map,
     String key, [
-    Map<String, dynamic> defaultValue,
+    Map<String, dynamic>? defaultValue,
   ]) {
     return _readFromMapWithDefaultValue(map, key, defaultValue);
   }
 
   List<Map<String, dynamic>> readMapListFromMap(
-      Map<String, dynamic> map, String key) {
+      Map<String, dynamic>? map, String key) {
     return _readListFromMap(map, key);
   }
 
-  List<Map<String, dynamic>> readMapListFromMapWithDefaultValue(
-    Map<String, dynamic> map,
+  List<Map<String, dynamic>>? readMapListFromMapWithDefaultValue(
+    Map<String, dynamic>? map,
     String key, [
-    List<Map<String, dynamic>> defaultValue,
+    List<Map<String, dynamic>>? defaultValue,
   ]) {
     return _readListFromMapWithDefaultValue(map, key, defaultValue);
   }
 
   //MARK: Functions to read bool from a map
 
-  bool readBooleanFromMap(Map<String, dynamic> map, String key) {
+  bool readBooleanFromMap(Map<String, dynamic>? map, String key) {
     return _readFromMap(map, key);
   }
 
-  bool readBooleanFromMapWithDefaultValue(
-    Map<String, dynamic> map,
+  bool? readBooleanFromMapWithDefaultValue(
+    Map<String, dynamic>? map,
     String key, [
-    bool defaultValue,
+    bool? defaultValue,
   ]) {
     return _readFromMapWithDefaultValue(map, key, defaultValue);
   }
@@ -104,7 +104,7 @@ class Sift {
   //MARK: Functions to read date from a map
 
   DateTime readDateFromMap(
-      Map<String, dynamic> map, String key, String dateFormat) {
+      Map<String, dynamic>? map, String key, String dateFormat) {
     var dateString = _readFromMap<String>(map, key);
     try {
       var formatter = DateFormat(dateFormat);
@@ -115,11 +115,11 @@ class Sift {
     }
   }
 
-  DateTime readDateFromMapWithDefaultValue(
-    Map<String, dynamic> map,
+  DateTime? readDateFromMapWithDefaultValue(
+    Map<String, dynamic>? map,
     String key,
     String dateFormat,
-    DateTime defaultValue,
+    DateTime? defaultValue,
   ) {
     try {
       return readDateFromMap(map, key, dateFormat);
@@ -130,8 +130,8 @@ class Sift {
 
   //MARK: Core functions to read values from a map
 
-  T _readFromMapWithDefaultValue<T>(
-      Map<String, dynamic> map, String key, T defaultValue) {
+  T? _readFromMapWithDefaultValue<T>(
+      Map<String, dynamic>? map, String key, T? defaultValue) {
     try {
       return _readFromMap(map, key);
     } catch (e) {
@@ -139,13 +139,13 @@ class Sift {
     }
   }
 
-  T _readFromMap<T>(Map<String, dynamic> map, String key) {
+  T _readFromMap<T>(Map<String, dynamic>? map, String key) {
     var value = _readValueFromMap(map, key);
     return _parseValue<T>(value, 'Key: $key');
   }
 
-  List<T> _readListFromMapWithDefaultValue<T>(
-      Map<String, dynamic> map, String key, List<T> defaultValue) {
+  List<T>? _readListFromMapWithDefaultValue<T>(
+      Map<String, dynamic>? map, String key, List<T>? defaultValue) {
     try {
       return _readListFromMap(map, key);
     } catch (e) {
@@ -153,14 +153,13 @@ class Sift {
     }
   }
 
-  List<T> _readListFromMap<T>(Map<String, dynamic> map, String key) {
+  List<T> _readListFromMap<T>(Map<String, dynamic>? map, String key) {
     var value = _readValueFromMap(map, key);
     return _parseListValue(value, 'Key: $key');
   }
 
-  T _readValueFromMap<T>(Map<String, dynamic> map, String key) {
+  T _readValueFromMap<T>(Map<String, dynamic>? map, String key) {
     if (map == null) throw SiftException('The source map is null');
-    if (key == null) throw SiftException('The key is null');
     if (map.containsKey(key) == false) {
       throw SiftException('Key: $key not found');
     }
@@ -173,50 +172,50 @@ class Sift {
 
   //MARK: Functions to read string from a list
 
-  String readStringFromList(List<dynamic> list, int index) {
+  String readStringFromList(List<dynamic>? list, int index) {
     return _readFromList(list, index);
   }
 
-  String readStringFromListWithDefaultValue(
-    List<dynamic> list,
+  String? readStringFromListWithDefaultValue(
+    List<dynamic>? list,
     int index, [
-    String defaultValue,
+    String? defaultValue,
   ]) {
     return _readFromListWithDefaultValue(list, index, defaultValue);
   }
 
   //MARK: Functions to read number from a list
 
-  num readNumberFromList(List<dynamic> list, int index) {
+  num readNumberFromList(List<dynamic>? list, int index) {
     return _readFromList(list, index);
   }
 
-  num readNumberFromListWithDefaultValue(
-    List<dynamic> list,
+  num? readNumberFromListWithDefaultValue(
+    List<dynamic>? list,
     int index, [
-    num defaultValue,
+    num? defaultValue,
   ]) {
     return _readFromListWithDefaultValue(list, index, defaultValue);
   }
 
   //MARK: Functions to read map from a list
 
-  Map<String, dynamic> readMapFromList(List<dynamic> list, int index) {
+  Map<String, dynamic> readMapFromList(List<dynamic>? list, int index) {
     return _readFromList(list, index);
   }
 
-  Map<String, dynamic> readMapFromListWithDefaultValue(
-    List<dynamic> list,
+  Map<String, dynamic>? readMapFromListWithDefaultValue(
+    List<dynamic>? list,
     int index, [
-    Map<String, dynamic> defaultValue,
+    Map<String, dynamic>? defaultValue,
   ]) {
     return _readFromListWithDefaultValue(list, index, defaultValue);
   }
 
   //MARK: Core functions to read values from a list
 
-  T _readFromListWithDefaultValue<T>(
-      List<dynamic> list, int index, T defaultValue) {
+  T? _readFromListWithDefaultValue<T>(
+      List<dynamic>? list, int index, T? defaultValue) {
     try {
       return _readFromList(list, index);
     } catch (e) {
@@ -224,14 +223,13 @@ class Sift {
     }
   }
 
-  T _readFromList<T>(List<dynamic> list, int index) {
+  T _readFromList<T>(List<dynamic>? list, int index) {
     var value = _readValueFromList(list, index);
     return _parseValue<T>(value, 'Index: $index');
   }
 
-  T _readValueFromList<T>(List<dynamic> list, int index) {
+  T _readValueFromList<T>(List<dynamic>? list, int index) {
     if (list == null) throw SiftException('The source list is null');
-    if (index == null) throw SiftException('The index is null');
     if (list.length <= index) throw SiftException('Index $index out of bounds');
     if (list[index] == null) {
       throw SiftException('The value is null for index: $index');
