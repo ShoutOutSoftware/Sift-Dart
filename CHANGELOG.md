@@ -37,3 +37,7 @@
 ## 1.0.9
 
 - Updated readme
+
+## 1.0.10
+
+- Added null safety
