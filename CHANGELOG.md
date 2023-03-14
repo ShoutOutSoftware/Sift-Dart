@@ -41,3 +41,7 @@
 ## 1.0.10
 
 - Added null safety
+
+## 1.0.11
+
+- Added functionality to print error using toString()
