@@ -105,9 +105,9 @@ class Sift {
   DateTime readDateFromMap(
     Map<String, dynamic>? map,
     String key,
-    String dateFormat, [
+    String dateFormat, {
     bool utc = false,
-  ]) {
+  }) {
     var dateString = _readFromMap<String>(map, key);
     try {
       var formatter = DateFormat(dateFormat);
@@ -121,11 +121,11 @@ class Sift {
     Map<String, dynamic>? map,
     String key,
     String dateFormat,
-    DateTime? defaultValue, [
+    DateTime? defaultValue, {
     bool utc = false,
-  ]) {
+  }) {
     try {
-      return readDateFromMap(map, key, dateFormat);
+      return readDateFromMap(map, key, dateFormat, utc: utc);
     } on SiftException catch (_) {
       return defaultValue;
     }
