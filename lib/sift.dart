@@ -8,7 +8,6 @@ export 'sift.dart';
 export 'sift_exception.dart';
 
 class Sift {
-
   //MARK: Functions to read string(s) from a map
 
   String readStringFromMap(Map<String, dynamic>? map, String key) {
@@ -103,11 +102,16 @@ class Sift {
 
   //MARK: Functions to read date from a map
 
-  DateTime readDateFromMap(Map<String, dynamic>? map, String key, String dateFormat) {
+  DateTime readDateFromMap(
+    Map<String, dynamic>? map,
+    String key,
+    String dateFormat, [
+    bool utc = false,
+  ]) {
     var dateString = _readFromMap<String>(map, key);
     try {
       var formatter = DateFormat(dateFormat);
-      return formatter.parse(dateString);
+      return formatter.parse(dateString, utc);
     } on FormatException catch (_) {
       throw SiftException('Failed to parse date for Key: $key, Date: $dateString, Format: $dateFormat');
     }
@@ -117,8 +121,9 @@ class Sift {
     Map<String, dynamic>? map,
     String key,
     String dateFormat,
-    DateTime? defaultValue,
-  ) {
+    DateTime? defaultValue, [
+    bool utc = false,
+  ]) {
     try {
       return readDateFromMap(map, key, dateFormat);
     } on SiftException catch (_) {

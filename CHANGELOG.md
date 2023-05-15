@@ -45,3 +45,7 @@
 ## 1.0.11
 
 - Added functionality to print error using toString()
+
+## 1.0.12
+
+- Added functionality to parse date as UTC
