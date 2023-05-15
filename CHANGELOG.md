@@ -49,3 +49,7 @@
 ## 1.0.12
 
 - Added functionality to parse date as UTC
+
+## 1.0.13
+
+- Fixed issue with parsing date as UTC
