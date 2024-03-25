@@ -57,3 +57,7 @@
 ## 1.0.14
 
 - Updated to latest Flutter version
+
+## 1.0.15
+
+- Updated intl dart library to latest version
