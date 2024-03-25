@@ -53,3 +53,7 @@
 ## 1.0.13
 
 - Fixed issue with parsing date as UTC
+
+## 1.0.14
+
+- Updated to latest Flutter version
